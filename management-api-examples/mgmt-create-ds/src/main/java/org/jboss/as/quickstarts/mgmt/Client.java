@@ -21,14 +21,14 @@ public class Client
         //ModelControllerClient client = ModelControllerClient.Factory.create(
         //      InetAddress.getByName("127.0.0.1"), 9999, DemoAuthentication.getCallbackHandler());
         ModelControllerClient client = ModelControllerClient.Factory.create(
-                InetAddress.getByName("127.0.0.1"), 9999);
+                InetAddress.getByName("10.32.69.185"), 9999, DemoAuthentication.getCallbackHandler());
         try
         {
             String dsname = "REPLACE_WITH_PROPERTY";
             ModelNode op = new ModelNode();
             op.get("operation").set("add");
 
-            op.get("address").add("subsystem", "datasources").add("data-source", dsname);
+            op.get("address").add("profile", "default").add("subsystem", "datasources").add("data-source", dsname);
 
             op.get("jndi-name").set("java:jboss/datasources/" + dsname);
             op.get("driver-name").set("mysql");
@@ -46,7 +46,7 @@ public class Client
 
                 ModelNode readOp = new ModelNode();
                 readOp.get("operation").set("read-resource");
-                readOp.get("address").add("subsystem", "datasources");
+                readOp.get("address").add("profile", "default").add("subsystem", "datasources");
                 readOp.get("recursive").set(true);
 
                 ModelNode localResult = client.execute(readOp);
@@ -69,25 +69,19 @@ public class Client
 
                 op = new ModelNode();
                 op.get("operation").set("enable");
-                op.get("address").add("subsystem", "datasources").add("data-source", dsname);
-                result = client.execute(
-                        new ModelNode()
-                                .get("operation").set("enable")
-                                .get("address")
-                                .add("subsystem", "datasources")
-                                .add("data-source", dsname)
-                );
+                op.get("address").add("profile", "default").add("subsystem", "datasources").add("data-source", dsname);
+                result = client.execute(op);
 
                 op = new ModelNode();
                 op.get("operation").set("write-attribute");
-                op.get("address").add("subsystem", "datasources").add("data-source", dsname);
+                op.get("address").add("profile", "default").add("subsystem", "datasources").add("data-source", dsname);
                 op.get("name").set("max-pool-size");
                 op.get("value").set("20");
                 result = client.execute(op);
 
                 op = new ModelNode();
                 op.get("operation").set("write-attribute");
-                op.get("address").add("subsystem", "datasources").add("data-source", dsname);
+                op.get("address").add("profile", "default").add("subsystem", "datasources").add("data-source", dsname);
                 op.get("name").set("min-pool-size");
                 op.get("value").set("10");
                 result = client.execute(op);

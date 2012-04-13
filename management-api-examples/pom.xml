@@ -8,6 +8,13 @@
     <version>1.0.0</version>
     <packaging>pom</packaging>
 
+    <parent>
+        <groupId>org.jboss</groupId>
+        <artifactId>jboss-parent</artifactId>
+        <version>8</version>
+	<relativePath/>
+    </parent>
+
     <url>http://jboss.org/jbossas</url>
     <licenses>
         <license>
@@ -44,17 +51,25 @@
         </dependencies>
     </dependencyManagement>
 
+
     <dependencies>
         <dependency>
             <groupId>org.jboss.as</groupId>
             <artifactId>jboss-as-controller-client</artifactId>
-            <version>7.1.1.Final-SNAPSHOT</version>
+            <version>7.1.0.Final-redhat-1</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.as</groupId>
             <artifactId>jboss-as-controller</artifactId>
-            <version>7.1.1.Final-SNAPSHOT</version>
+            <version>7.1.0.Final-redhat-1</version>
         </dependency>
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>jboss-eap-repository</id>
+            <url>http://10.32.69.181:8080/nexus/content/repositories/jboss-eap-repository</url>
+        </repository>
+    </repositories>
 
 </project>
